@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>万国服务 · Wanguo</title>
+  <title>万国服务 Wanguo</title>
   <meta name="description" content="三亚 / 博鳌：接机、翻译、用车、订房。Санья / Боао: трансфер, перевод, авто." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Noto+Sans+SC:wght@400;600;700&family=Noto+Serif+SC:wght@600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #f3eee4;
@@ -17,62 +20,83 @@
       --brass-ink: #2a2418;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 "Source Sans 3", "Noto Sans SC", "Noto Sans", system-ui, sans-serif; }
-    body { padding: 24px 16px 64px; }
-    .wrap { max-width: 440px; margin: 0 auto; }
-    header.hero { background: var(--sea); color: var(--paper); border-radius: 24px; padding: 24px 20px 20px; }
-    .brand { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin: 0; }
-    h1 { margin: 10px 0 0; font-size: 30px; line-height: 1.15; font-weight: 650; }
-    .place { margin: 6px 0 0; opacity: .8; font-size: 14px; }
-    .lead { margin: 12px 0 0; font-size: 16px; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); }
+    body {
+      font-family: "Source Sans 3", "Noto Sans SC", "Noto Sans", system-ui, sans-serif;
+      line-height: 1.5;
+      padding: 24px 16px 64px;
+    }
+    .wrap { max-width: 32rem; margin: 0 auto; }
+    .print-corner {
+      position: fixed; top: 12px; right: 12px; z-index: 10;
+      width: 28px; height: 28px; border: 0; background: transparent;
+      color: var(--brass); opacity: .8; padding: 0; cursor: pointer;
+    }
+    .hero {
+      background: var(--sea); color: var(--paper);
+      border-radius: 24px; padding: 24px 20px 20px;
+    }
+    .brand {
+      margin: 0; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--brass);
+    }
+    h1 {
+      margin: 8px 0 0;
+      font-family: Fraunces, "Noto Serif SC", "Source Serif 4", Georgia, serif;
+      font-size: 30px; line-height: 1.2; font-weight: 640;
+    }
+    .place { margin: 4px 0 0; font-size: 14px; opacity: .8; }
+    .lead { margin: 12px 0 0; }
     .switch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; }
     .switch button {
       border: 1px solid rgba(255,253,248,.3); background: transparent; color: var(--paper);
-      border-radius: 999px; min-height: 42px; font-weight: 650; cursor: pointer;
+      border-radius: 999px; min-height: 42px; font-weight: 650; cursor: pointer; font: inherit;
     }
     .switch button.on { background: var(--paper); color: var(--sea); border-color: var(--paper); }
-    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 24px; padding: 20px; margin-top: 16px; }
-    h2 { margin: 0; font-size: 20px; }
-    .item { display: grid; grid-template-columns: 2.1rem 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .card {
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 24px; padding: 20px; margin-top: 16px;
+    }
+    h2 { margin: 0; font-size: 20px; font-weight: 650; }
+    .item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
     .item:last-child { border-bottom: 0; padding-bottom: 0; }
-    .num { color: var(--brass); font-weight: 700; padding-top: 2px; font-size: 13px; }
+    .ico { flex: none; margin-top: 2px; color: var(--brass); }
     .item p { margin: 0; }
     .item .t { font-weight: 700; }
     .item .b { color: var(--muted); font-size: 14px; margin-top: 2px; }
-    .notes { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .notes { margin: 8px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
     .notes li { margin: 4px 0; }
     .contact { display: flex; gap: 16px; align-items: center; }
-    .qr { width: 96px; height: 96px; border-radius: 10px; background: var(--bg); flex: none; }
-    .handle { font-size: 26px; line-height: 1; font-weight: 700; margin: 4px 0 0; }
-    .tiny { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+    .qr { width: 96px; height: 96px; border-radius: 8px; background: var(--bg); flex: none; }
+    .tiny { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .handle { margin: 4px 0 0; font-size: 24px; line-height: 1; font-weight: 700; }
+    .phone { margin: 4px 0 0; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 4px; }
     label { display: block; margin-top: 14px; font-size: 14px; font-weight: 700; }
     input, select {
       display: block; width: 100%; margin-top: 6px; border: 1px solid var(--line); background: var(--bg);
-      border-radius: 12px; padding: 12px; font: inherit;
+      border-radius: 12px; padding: 12px; font: inherit; color: inherit;
     }
-    .btn { display: flex; align-items: center; justify-content: center; min-height: 48px; border-radius: 16px; text-decoration: none; font-weight: 700; margin-top: 10px; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 48px; border-radius: 16px; text-decoration: none; font-weight: 700; margin-top: 10px;
+    }
     .btn.sea { background: var(--sea); color: var(--paper); }
     .btn.brass { background: var(--brass); color: var(--brass-ink); }
     .btn.line { border: 1px solid var(--line); color: var(--ink); }
     .foot { text-align: center; color: var(--muted); font-size: 12px; margin-top: 24px; }
-    .print-corner {
-      position: fixed; top: 10px; right: 10px; width: 28px; height: 28px;
-      border: 0; background: transparent; color: #8a969c; opacity: .7;
-      padding: 0; cursor: pointer;
-    }
     @media print {
       @page { size: A4; margin: 12mm; }
-      body { background: var(--paper); padding: 0; }
       .no-print { display: none !important; }
-      header.hero { border-radius: 0; }
-      .card { break-inside: avoid; }
+      body { background: var(--paper); padding: 0; }
+      .hero, .card { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
   <button class="print-corner no-print" type="button" onclick="window.print()" aria-label="print">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+      <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/>
+      <rect x="6" y="14" width="12" height="8" rx="1"/>
     </svg>
   </button>
   <div class="wrap">
@@ -82,47 +106,63 @@
       <p class="place" data-k="place"></p>
       <p class="lead" data-k="lead"></p>
       <div class="switch no-print">
-        <button type="button" id="btn-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="btn-zh" class="on" onclick="setLang('zh')">中文</button>
         <button type="button" id="btn-ru" onclick="setLang('ru')">Русский</button>
       </div>
     </header>
+
     <section class="card">
       <h2 data-k="do"></h2>
       <div id="items"></div>
     </section>
+
     <section class="card">
       <h2 data-k="not"></h2>
       <ul class="notes" id="notes"></ul>
     </section>
+
     <section class="card">
       <div class="contact">
-        <svg class="qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" shape-rendering="crispEdges" aria-label="Telegram QR">
+        <svg class="qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" shape-rendering="crispEdges" aria-label="Telegram @pczZJ">
           <path fill="#fffdf8" d="M0 0h27v27H0z"/>
           <path fill="none" stroke="#1a3a4a" d="M1 1.5h7m3 0h2m1 0h2m3 0h7M1 2.5h1m5 0h1m1 0h1m1 0h3m2 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m3 0h3m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m3 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m2 0h1m1 0h2m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h1m1 0h1M1 9.5h1m1 0h1m1 0h1m1 0h1m5 0h1m2 0h1m4 0h1m2 0h1M1 10.5h1m1 0h4m1 0h2m1 0h1m1 0h2m2 0h4m4 0h1M3 11.5h1m2 0h2m1 0h2m4 0h1m2 0h1m2 0h1m1 0h3M2 12.5h5m2 0h4m1 0h2m2 0h2m4 0h1M2 13.5h3m1 0h3m3 0h1m2 0h1m1 0h4m1 0h1m1 0h2M5 14.5h1m3 0h1m2 0h1m2 0h1m1 0h3m2 0h1m2 0h1M1 15.5h1m1 0h2m2 0h1m2 0h2m2 0h1m2 0h2m1 0h1m2 0h3M2 16.5h2m1 0h1m4 0h1m1 0h1m3 0h1m4 0h1m2 0h1M1 17.5h1m3 0h1m1 0h2m1 0h1m2 0h1m3 0h6M9 18.5h6m2 0h1m3 0h2m1 0h2M1 19.5h7m3 0h3m1 0h3m1 0h1m1 0h2m1 0h2M1 20.5h1m5 0h1m2 0h2m1 0h3m1 0h1m3 0h2m1 0h2M1 21.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m1 0h6m2 0h1M1 22.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h1m2 0h4M1 23.5h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h1m4 0h1m3 0h1M1 24.5h1m5 0h1m2 0h1m1 0h1m3 0h2m3 0h2m1 0h1M1 25.5h7m1 0h2m2 0h1m3 0h4m3 0h2"/>
         </svg>
         <div>
           <p class="tiny" data-k="contact"></p>
           <p class="handle">@pczZJ</p>
-          <p style="margin:8px 0 0">Telegram / WhatsApp</p>
-          <p style="margin:4px 0 0;font-weight:700">+86 138 7663 6537</p>
+          <p style="margin:8px 0 0;font-size:14px">Telegram / WhatsApp</p>
+          <p class="phone">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +86 138 7663 6537
+          </p>
         </div>
       </div>
     </section>
+
     <section class="card no-print">
       <h2 data-k="ask"></h2>
-      <p class="b" data-k="askNote" style="color:var(--muted);font-size:14px;margin:8px 0 0"></p>
+      <p class="b" data-k="askNote" style="color:var(--muted);font-size:14px;margin:4px 0 0"></p>
       <label><span data-k="people"></span><input id="people" inputmode="numeric" value="2" /></label>
       <label><span data-k="date"></span><input id="date" type="date" /></label>
       <label><span data-k="bay"></span><select id="bay"></select></label>
       <label><span data-k="need"></span><select id="need"></select></label>
       <a class="btn sea" id="tg" href="https://t.me/pczZJ" target="_blank" rel="noreferrer"></a>
       <a class="btn brass" id="wa" href="https://wa.me/8613876636537" target="_blank" rel="noreferrer"></a>
-      <a class="btn line" href="tel:+8613876636537" data-k="call"></a>
+      <a class="btn line" href="tel:+8613876636537" id="call"></a>
     </section>
+
     <p class="foot">海南万国大健康投资有限公司<br />Hainan Wanguo · Санья / Боао</p>
   </div>
   <script>
-    const C = {
+    var ICONS = [
+      '<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+      '<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>',
+      '<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>',
+      '<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+      '<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>',
+      '<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>'
+    ];
+    var C = {
       zh: {
         brand: "海南万国大健康",
         title: "接机。翻译。送到。",
@@ -141,12 +181,12 @@
         call: "打电话 +86 138 7663 6537",
         contact: "联系",
         items: [
-          ["01", "接机 / 送机", "凤凰机场 ↔ 大东海、亚龙湾、三亚湾。请写航班号和人数。"],
-          ["02", "专车", "市内半天或全天。三亚往返博鳌单独报价。"],
-          ["03", "翻译陪同", "陪去诊所、医院、购物。只翻译和排队，不代替医生。"],
-          ["04", "万国公寓 · 博鳌", "可做饭。适合检查、陪护、多住几天。先问空房。"],
-          ["05", "代约有牌照的机构", "帮约时间、安排车和翻译。项目费付给机构。"],
-          ["06", "博鳌一日", "专车加翻译，送到园区或医院门口。单程大约 2.5 小时。"]
+          ["接机 / 送机", "凤凰机场 ↔ 大东海、亚龙湾、三亚湾。请写航班号和人数。"],
+          ["专车", "市内半天或全天。三亚往返博鳌单独报价。"],
+          ["翻译陪同", "陪去诊所、医院、购物。只翻译和排队，不代替医生。"],
+          ["万国公寓 · 博鳌", "可做饭。适合检查、陪护、多住几天。先问空房。"],
+          ["代约有牌照的机构", "帮约时间、安排车和翻译。项目费付给机构。"],
+          ["博鳌一日", "专车加翻译，送到园区或医院门口。单程大约 2.5 小时。请先说去哪家。"]
         ],
         notes: [
           "我们不是医院，不承诺疗效，不售药。",
@@ -176,12 +216,12 @@
         call: "Позвонить +86 138 7663 6537",
         contact: "Напишите сюда",
         items: [
-          ["01", "Трансфер", "Аэропорт Феникс — Дадунхай, Ялунвань, бухта Санья. Напишите рейс и число людей."],
-          ["02", "Авто", "По городу полдня или день. Санья — Боао считается отдельно."],
-          ["03", "Переводчик", "В клинику, больницу, за покупками. Переводим и помогаем с очередью. Мы не врачи."],
-          ["04", "Квартира в Боао", "Апартаменты Wanguo с кухней. Сначала проверим, есть ли места."],
-          ["05", "Запись в клинику", "Запишем в лицензированную клинику. Процедуры оплачиваете клинике."],
-          ["06", "День в Боао", "Машина и переводчик до парка или больницы. Около 2,5 часов в одну сторону."]
+          ["Трансфер", "Аэропорт Феникс — Дадунхай, Ялунвань, бухта Санья. Напишите рейс и число людей."],
+          ["Авто", "По городу полдня или день. Санья — Боао считается отдельно."],
+          ["Переводчик", "В клинику, больницу, за покупками. Переводим и помогаем с очередью. Мы не врачи."],
+          ["Квартира в Боао", "Апартаменты Wanguo с кухней. Сначала проверим, есть ли места."],
+          ["Запись в клинику", "Запишем в лицензированную клинику, подадим машину и переводчика. Процедуры оплачиваете клинике."],
+          ["День в Боао", "Машина и переводчик до парка или больницы. Около 2,5 часов в одну сторону. Напишите, куда именно."]
         ],
         notes: [
           "Мы не больница и не продаём лекарства.",
@@ -194,54 +234,54 @@
         hello: "Здравствуйте, Wanguo."
       }
     };
-    let lang = "zh";
+    var lang = "zh";
     function fillSelect(id, arr, keepIndex) {
-      const el = document.getElementById(id);
-      const i = keepIndex ?? el.selectedIndex ?? 0;
-      el.innerHTML = arr.map((v) => `<option>${v}</option>`).join("");
+      var el = document.getElementById(id);
+      var i = keepIndex == null ? (el.selectedIndex || 0) : keepIndex;
+      el.innerHTML = arr.map(function (v) { return "<option>" + v + "</option>"; }).join("");
       el.selectedIndex = Math.max(0, Math.min(i, arr.length - 1));
     }
     function message() {
-      const t = C[lang];
-      const people = document.getElementById("people").value || "—";
-      const date = document.getElementById("date").value || "—";
-      const bay = document.getElementById("bay").value;
-      const need = document.getElementById("need").value;
-      if (lang === "ru") {
-        return [t.hello, `\u041b\u044e\u0434\u0435\u0439: ${people}`, `\u0414\u0430\u0442\u0430: ${date}`, `\u0411\u0443\u0445\u0442\u0430: ${bay}`, `\u041d\u0443\u0436\u043d\u043e: ${need}`].join("\n");
-      }
-      return [t.hello, `\u4eba\u6570\uff1a${people}`, `\u65e5\u671f\uff1a${date}`, `\u6e7e\uff1a${bay}`, `\u9700\u8981\uff1a${need}`].join("\n");
+      var t = C[lang];
+      var people = document.getElementById("people").value || "—";
+      var date = document.getElementById("date").value || "—";
+      var bay = document.getElementById("bay").value;
+      var need = document.getElementById("need").value;
+      if (lang === "ru") return [t.hello, "Людей: " + people, "Дата: " + date, "Бухта: " + bay, "Нужно: " + need].join("\n");
+      return [t.hello, "人数：" + people, "日期：" + date, "湾：" + bay, "需要：" + need].join("\n");
     }
     function bindLinks() {
-      const t = C[lang];
-      const text = encodeURIComponent(message());
-      const tg = document.getElementById("tg");
-      const wa = document.getElementById("wa");
+      var t = C[lang];
+      var text = encodeURIComponent(message());
+      var tg = document.getElementById("tg");
+      var wa = document.getElementById("wa");
       tg.textContent = t.sendTg;
       wa.textContent = t.sendWa;
+      document.getElementById("call").textContent = t.call;
       tg.href = "https://t.me/pczZJ?text=" + text;
       wa.href = "https://wa.me/8613876636537?text=" + text;
     }
     function setLang(next) {
-      const bayI = document.getElementById("bay").selectedIndex;
-      const needI = document.getElementById("need").selectedIndex;
+      var bayI = document.getElementById("bay").selectedIndex;
+      var needI = document.getElementById("need").selectedIndex;
       lang = next;
-      const t = C[next];
+      var t = C[next];
       document.documentElement.lang = next === "ru" ? "ru" : "zh-CN";
       document.getElementById("btn-zh").className = next === "zh" ? "on" : "";
       document.getElementById("btn-ru").className = next === "ru" ? "on" : "";
-      document.querySelectorAll("[data-k]").forEach((el) => {
-        el.textContent = t[el.getAttribute("data-k")];
+      document.querySelectorAll("[data-k]").forEach(function (el) {
+        var k = el.getAttribute("data-k");
+        if (typeof t[k] === "string") el.textContent = t[k];
       });
-      document.getElementById("items").innerHTML = t.items.map(([n, a, b]) =>
-        `<div class="item"><span class="num">${n}</span><div><p class="t">${a}</p><p class="b">${b}</p></div></div>`
-      ).join("");
-      document.getElementById("notes").innerHTML = t.notes.map((n) => `<li>${n}</li>`).join("");
+      document.getElementById("items").innerHTML = t.items.map(function (row, i) {
+        return '<div class="item">' + ICONS[i] + '<div><p class="t">' + row[0] + '</p><p class="b">' + row[1] + "</p></div></div>";
+      }).join("");
+      document.getElementById("notes").innerHTML = t.notes.map(function (n) { return "<li>" + n + "</li>"; }).join("");
       fillSelect("bay", t.bays, bayI);
       fillSelect("need", t.needs, needI);
       bindLinks();
     }
-    ["people", "date", "bay", "need"].forEach((id) => {
+    ["people", "date", "bay", "need"].forEach(function (id) {
       document.getElementById(id).addEventListener("input", bindLinks);
       document.getElementById(id).addEventListener("change", bindLinks);
     });
