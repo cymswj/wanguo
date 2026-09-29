@@ -1,1 +1,273 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>万国服务 · Wanguo</title>
+  <meta name="description" content="海口候鸟、博鳌公寓、三亚接机翻译。Hainan Wanguo: Хайкоу, Боао, Санья." />
+  <style>
+    :root {
+      --bg: #f3eee4;
+      --ink: #1a3340;
+      --muted: #5d6e76;
+      --paper: #fffdf8;
+      --line: #e4d9c8;
+      --sea: #1a3a4a;
+      --brass: #b8924a;
+      --brass-ink: #2a2418;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 "Source Sans 3", "Noto Sans SC", "Noto Sans", system-ui, sans-serif; }
+    body { padding: 20px 16px 56px; }
+    .wrap { max-width: 560px; margin: 0 auto; }
+    .hero { background: var(--sea); color: var(--paper); border-radius: 24px; padding: 24px 20px 20px; position: relative; }
+    .brand { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin: 0; }
+    h1 { margin: 10px 0 0; font-size: 28px; line-height: 1.2; font-weight: 650; }
+    .place { margin: 6px 0 0; opacity: .8; font-size: 14px; }
+    .lead { margin: 12px 0 0; }
+    .switch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; }
+    .switch button {
+      border: 1px solid rgba(255,253,248,.3); background: transparent; color: var(--paper);
+      border-radius: 999px; min-height: 42px; font-weight: 650; cursor: pointer;
+    }
+    .switch button.on { background: var(--paper); color: var(--sea); border-color: var(--paper); }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 24px; padding: 20px; margin-top: 14px; }
+    h2 { margin: 0; font-size: 20px; }
+    .item { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .item .t { font-weight: 700; }
+    .item .b { color: var(--muted); font-size: 14px; margin-top: 2px; }
+    .notes { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .notes li { margin: 4px 0; }
+    .contact { display: flex; gap: 16px; align-items: center; }
+    .qr { width: 96px; height: 96px; border-radius: 10px; background: var(--bg); flex: none; }
+    .handle { font-size: 26px; line-height: 1; font-weight: 700; margin: 4px 0 0; }
+    .tiny { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+    label { display: block; margin-top: 14px; font-size: 14px; font-weight: 700; }
+    input, select {
+      display: block; width: 100%; margin-top: 6px; border: 1px solid var(--line); background: var(--bg);
+      border-radius: 12px; padding: 12px; font: inherit;
+    }
+    .btn { display: flex; align-items: center; justify-content: center; min-height: 48px; border-radius: 16px; text-decoration: none; font-weight: 700; margin-top: 10px; }
+    .btn.sea { background: var(--sea); color: var(--paper); }
+    .btn.brass { background: var(--brass); color: var(--brass-ink); }
+    .btn.line { border: 1px solid var(--line); color: var(--ink); }
+    .foot { text-align: center; color: var(--muted); font-size: 12px; margin-top: 24px; }
+    .print-corner {
+      position: absolute; top: 10px; right: 10px; width: 28px; height: 28px;
+      border: 0; background: transparent; color: var(--brass); opacity: .75;
+      padding: 0; cursor: pointer;
+    }
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: var(--paper); padding: 0; }
+      .no-print { display: none !important; }
+      .hero { border-radius: 0; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <button class="print-corner no-print" type="button" onclick="window.print()" aria-label="print">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/>
+        </svg>
+      </button>
+      <p class="brand" data-k="brand"></p>
+      <h1 data-k="title"></h1>
+      <p class="place" data-k="place"></p>
+      <p class="lead" data-k="lead"></p>
+      <div class="switch no-print">
+        <button type="button" id="btn-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="btn-ru" onclick="setLang('ru')">Русский</button>
+      </div>
+    </header>
+    <section class="card"><h2 data-k="zones"></h2><div id="places"></div></section>
+    <section class="card"><h2 data-k="who"></h2><div id="who"></div></section>
+    <section class="card"><h2 data-k="do"></h2><div id="items"></div></section>
+    <section class="card"><h2 data-k="not"></h2><ul class="notes" id="notes"></ul></section>
+    <section class="card">
+      <div class="contact">
+        <svg class="qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" shape-rendering="crispEdges" aria-label="Telegram QR">
+          <path fill="#fffdf8" d="M0 0h27v27H0z"/>
+          <path fill="none" stroke="#1a3a4a" d="M1 1.5h7m3 0h2m1 0h2m3 0h7M1 2.5h1m5 0h1m1 0h1m1 0h3m2 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m3 0h3m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m3 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m2 0h1m1 0h2m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h1m1 0h1M1 9.5h1m1 0h1m1 0h1m1 0h1m5 0h1m2 0h1m4 0h1m2 0h1M1 10.5h1m1 0h4m1 0h2m1 0h1m1 0h2m2 0h4m4 0h1M3 11.5h1m2 0h2m1 0h2m4 0h1m2 0h1m2 0h1m1 0h3M2 12.5h5m2 0h4m1 0h2m2 0h2m4 0h1M2 13.5h3m1 0h3m3 0h1m2 0h1m1 0h4m1 0h1m1 0h2M5 14.5h1m3 0h1m2 0h1m2 0h1m1 0h3m2 0h1m2 0h1M1 15.5h1m1 0h2m2 0h1m2 0h2m2 0h1m2 0h2m1 0h1m2 0h3M2 16.5h2m1 0h1m4 0h1m1 0h1m3 0h1m4 0h1m2 0h1M1 17.5h1m3 0h1m1 0h2m1 0h1m2 0h1m3 0h6M9 18.5h6m2 0h1m3 0h2m1 0h2M1 19.5h7m3 0h3m1 0h3m1 0h1m1 0h2m1 0h2M1 20.5h1m5 0h1m2 0h2m1 0h3m1 0h1m3 0h2m1 0h2M1 21.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m1 0h6m2 0h1M1 22.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h1m2 0h4M1 23.5h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h1m4 0h1m3 0h1M1 24.5h1m5 0h1m2 0h1m1 0h1m3 0h2m3 0h2m1 0h1M1 25.5h7m1 0h2m2 0h1m3 0h4m3 0h2"/>
+        </svg>
+        <div>
+          <p class="tiny" data-k="contact"></p>
+          <p class="handle">@pczZJ</p>
+          <p style="margin:8px 0 0">Telegram / WhatsApp</p>
+          <p style="margin:4px 0 0;font-weight:700">+86 138 7663 6537</p>
+        </div>
+      </div>
+    </section>
+    <section class="card no-print">
+      <h2 data-k="ask"></h2>
+      <p class="b" data-k="askNote" style="color:var(--muted);font-size:14px;margin:8px 0 0"></p>
+      <label><span data-k="people"></span><input id="people" inputmode="numeric" value="2" /></label>
+      <label><span data-k="date"></span><input id="date" type="date" /></label>
+      <label><span data-k="bay"></span><select id="bay"></select></label>
+      <label><span data-k="need"></span><select id="need"></select></label>
+      <a class="btn sea" id="tg" href="https://t.me/pczZJ" target="_blank" rel="noreferrer"></a>
+      <a class="btn brass" id="wa" href="https://wa.me/8613876636537" target="_blank" rel="noreferrer"></a>
+      <a class="btn line" href="tel:+8613876636537" data-k="call"></a>
+    </section>
+    <p class="foot">海南万国大健康投资有限公司<br />Hainan Wanguo · Хайкоу / Боао / Санья</p>
+  </div>
+  <script>
+    const C = {
+      zh: {
+        brand: "海南万国大健康",
+        title: "三亚落地。博鳌能住。海口有人接。",
+        place: "海口 · 博鳌乐城 · 三亚",
+        lead: "国内候鸟走海口和公寓。俄语客人走三亚接机和翻译。当天能安排的，先做当天的。",
+        zones: "三个点",
+        places: [
+          ["三亚", "俄语、中亚客人落地。接机、翻译、专车。先大东海，再决定要不要去博鳌。"],
+          ["博鳌 · 万国公寓", "可做饭。检查、陪护、多住几天。先问空房。送到园区或医院门口。"],
+          ["海口", "国内候鸟入口。慢病旅居、季节过来、用车和住宿对接。"]
+        ],
+        who: "给谁看",
+        whoItems: [
+          ["国内客人", "要住几天、家属陪护、车能到院门口。写入住日期和人数即可。"],
+          ["俄罗斯 / 中亚客人", "写航班号、人数、住哪个湾。Telegram 最快。"]
+        ],
+        do: "可以帮你做的",
+        not: "不含",
+        ask: "发给我们",
+        askNote: "四行就够：人数、日期、住哪、需要什么。",
+        people: "几个人",
+        date: "哪天",
+        bay: "住在哪里",
+        need: "需要什么",
+        sendTg: "用 Telegram 发出",
+        sendWa: "用 WhatsApp 发出",
+        call: "打电话 +86 138 7663 6537",
+        contact: "联系",
+        items: [
+          ["接机 / 送机", "凤凰机场 ↔ 大东海、亚龙湾、三亚湾。请写航班号和人数。"],
+          ["专车", "市内半天或全天。三亚往返博鳌单独报价，单程大约 2.5 小时。"],
+          ["翻译陪同", "陪去诊所、医院、购物。只翻译和排队，不代替医生。"],
+          ["万国公寓 · 博鳌", "可做饭。适合检查、陪护、多住几天。先问空房。"],
+          ["代约有牌照的机构", "帮约时间、安排车和翻译。项目费付给机构。"],
+          ["博鳌一日", "专车加翻译，送到园区或医院门口。请先说去哪家。"]
+        ],
+        notes: [
+          "我们不是医院，不承诺疗效，不售药。",
+          "医疗费、门票、餐费另付。项目费付给机构。",
+          "现场常见人民币现金。不保证所有银行卡都能刷。",
+          "免签停留通常不超过 30 天。"
+        ],
+        bays: ["大东海", "亚龙湾", "三亚湾", "海棠湾", "博鳌 / 乐城", "海口", "还没订"],
+        needs: ["接机", "送机", "专车", "翻译陪同", "订公寓", "代约理疗", "博鳌一日"],
+        hello: "你好，万国。"
+      },
+      ru: {
+        brand: "Hainan Wanguo",
+        title: "Встретим. Переведём. Отвезём.",
+        place: "Хайкоу · Боао · Санья",
+        lead: "В Санье — трансфер и переводчик. В Боао — квартира с кухней. Можно на сегодня.",
+        zones: "Три точки",
+        places: [
+          ["Санья", "Встреча в аэропорту Феникс, переводчик, авто. Сначала Дадунхай. Боао — по желанию."],
+          ["Боао · квартира", "Апартаменты Wanguo с кухней. Сначала спросим, есть ли места."],
+          ["Хайкоу", "Для зимних гостей из Китая. Отдельный маршрут."]
+        ],
+        who: "Для кого",
+        whoItems: [
+          ["Гости из России и Центральной Азии", "Напишите рейс, число людей и бухту. Быстрее всего Telegram."],
+          ["Гости из Китая", "Проживание, машина, сопровождение семьи. Дата заезда и число людей."]
+        ],
+        do: "Что мы делаем",
+        not: "Что не входит",
+        ask: "Написать нам",
+        askNote: "Четыре строки: сколько человек, дата, где живёте, что нужно.",
+        people: "Сколько человек",
+        date: "Дата",
+        bay: "Где живёте",
+        need: "Что нужно",
+        sendTg: "Отправить в Telegram",
+        sendWa: "Отправить в WhatsApp",
+        call: "Позвонить +86 138 7663 6537",
+        contact: "Напишите сюда",
+        items: [
+          ["Трансфер", "Аэропорт Феникс — Дадунхай, Ялунвань, бухта Санья. Напишите рейс и число людей."],
+          ["Авто", "По городу полдня или день. Санья — Боао считается отдельно, около 2,5 часов."],
+          ["Переводчик", "В клинику, больницу, за покупками. Переводим и помогаем с очередью. Мы не врачи."],
+          ["Квартира в Боао", "Апартаменты Wanguo с кухней. Сначала проверим, есть ли места."],
+          ["Запись в клинику", "Запишем в лицензированную клинику. Процедуры оплачиваете клинике."],
+          ["День в Боао", "Машина и переводчик до парка или больницы. Напишите, куда именно."]
+        ],
+        notes: [
+          "Мы не больница и не продаём лекарства.",
+          "Не обещаем лечебный эффект. Лечение, билеты и еда — отдельно.",
+          "Чаще всего наличные юани. Не все карты работают.",
+          "Безвизовый срок обычно до 30 дней."
+        ],
+        bays: ["Дадунхай", "Ялунвань", "Бухта Санья", "Хайтанвань", "Боао / Лэчэн", "Хайкоу", "Ещё не выбрали"],
+        needs: ["Встреча", "Проводы", "Авто", "Переводчик", "Квартира", "Запись в клинику", "День в Боао"],
+        hello: "Здравствуйте, Wanguo."
+      }
+    };
+    let lang = "zh";
+    function fillSelect(id, arr, keepIndex) {
+      const el = document.getElementById(id);
+      const i = keepIndex ?? el.selectedIndex ?? 0;
+      el.innerHTML = arr.map((v) => "<option>" + v + "</option>").join("");
+      el.selectedIndex = Math.max(0, Math.min(i, arr.length - 1));
+    }
+    function list(id, rows) {
+      document.getElementById(id).innerHTML = rows.map(function (row) {
+        return '<div class="item"><p class="t">' + row[0] + '</p><p class="b">' + row[1] + "</p></div>";
+      }).join("");
+    }
+    function message() {
+      const t = C[lang];
+      const people = document.getElementById("people").value || "—";
+      const date = document.getElementById("date").value || "—";
+      const bay = document.getElementById("bay").value;
+      const need = document.getElementById("need").value;
+      if (lang === "ru") {
+        return [t.hello, "Людей: " + people, "Дата: " + date, "Где: " + bay, "Нужно: " + need].join("\n");
+      }
+      return [t.hello, "人数：" + people, "日期：" + date, "地点：" + bay, "需要：" + need].join("\n");
+    }
+    function bindLinks() {
+      const t = C[lang];
+      const text = encodeURIComponent(message());
+      const tg = document.getElementById("tg");
+      const wa = document.getElementById("wa");
+      tg.textContent = t.sendTg;
+      wa.textContent = t.sendWa;
+      tg.href = "https://t.me/pczZJ?text=" + text;
+      wa.href = "https://wa.me/8613876636537?text=" + text;
+    }
+    function setLang(next) {
+      const bayI = document.getElementById("bay").selectedIndex;
+      const needI = document.getElementById("need").selectedIndex;
+      lang = next;
+      const t = C[next];
+      document.documentElement.lang = next === "ru" ? "ru" : "zh-CN";
+      document.getElementById("btn-zh").className = next === "zh" ? "on" : "";
+      document.getElementById("btn-ru").className = next === "ru" ? "on" : "";
+      document.querySelectorAll("[data-k]").forEach(function (el) {
+        const k = el.getAttribute("data-k");
+        if (typeof t[k] === "string") el.textContent = t[k];
+      });
+      list("places", t.places);
+      list("who", t.whoItems);
+      list("items", t.items);
+      document.getElementById("notes").innerHTML = t.notes.map(function (n) { return "<li>" + n + "</li>"; }).join("");
+      fillSelect("bay", t.bays, bayI);
+      fillSelect("need", t.needs, needI);
+      bindLinks();
+    }
+    ["people", "date", "bay", "need"].forEach(function (id) {
+      document.getElementById(id).addEventListener("input", bindLinks);
+      document.getElementById(id).addEventListener("change", bindLinks);
+    });
+    setLang("zh");
+  </script>
+</body>
+</html>
